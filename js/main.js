@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	let obj = new CartContainer(data);
 	let countElem = obj.getData().length;
 	let elemArray = [];
+	let firstColumn = [];
 
 	// Кол-во колонок
 	// Отступ между колонками
@@ -59,42 +60,159 @@ document.addEventListener('DOMContentLoaded', function(){
 	let cartHeight = 0;
 	let cartWidth = (width-(columns-1)*gutter)/columns;
 
-	for (let i=0; i<countElem; i++) {
+	// Min, Max карточек в первой колонке
+	let minCarts = 3;
+	let maxCarts = 5;
+	let curCarts = 0;
+
+	for (let i=0, j=0; i<countElem; i++) {
 		let node = obj.createEl();
 
-		// Смещение по горизонтали
-		let left = (i%columns) ? ((i%columns)*(gutter+cartWidth)) : 0;
-		node.style.left = left + 'px';
-		node.style.width = cartWidth + 'px';
+		// Элементов мало, в колонку нужно 3
+		if (countElem < 7) {
+			// Смещение по горизонтали
+			if (curCarts<3) {
+				let left = 0;
+				node.style.left = left + 'px';
+				node.style.width = cartWidth + 'px';
 
-		rootContainer.appendChild(node);
+				// Добавили элемент в контейнер (иначе не считает высоту)
+				rootContainer.appendChild(node);
 
-		// Смещение по вертикали
-		let top = getTop(elemArray, i);
-		node.style.top = top + 'px';
+				// Смещение по вертикали
+				let top = getTop(firstColumn, i, 1);
+				node.style.top = top + 'px';
 
-		elemArray.push(node);
+				curCarts++;
+
+				firstColumn.push(node);
+			} else {
+				let left = (j%(columns-1)) ? ((j%(columns-1))*(gutter+cartWidth)+(gutter+cartWidth))  : (gutter+cartWidth);
+				node.style.left = left + 'px';
+				node.style.width = cartWidth + 'px';
+
+				// Добавили элемент в контейнер (иначе не считает высоту)
+				rootContainer.appendChild(node);
+
+				// Смещение по вертикали
+				let top = getTop(elemArray, j, columns-1);
+				node.style.top = top + 'px';
+
+				j++;
+				console.log(j);
+
+				// Положили элемент в массив
+				elemArray.push(node);
+			}
+
+		}
+		// Можно ложить в 3 колонки
+		else if (countElem >= 7 && countElem < 14) {
+			// Смещение по горизонтали
+			let left = (i%columns) ? ((i%columns)*(gutter+cartWidth)) : 0;
+			node.style.left = left + 'px';
+			node.style.width = cartWidth + 'px';
+
+			// Добавили элемент в контейнер (иначе не считает высоту)
+			rootContainer.appendChild(node);
+
+			// Смещение по вертикали
+			let top = getTop(elemArray, i, columns);
+			node.style.top = top + 'px';
+
+			// Положили элемент в массив
+			elemArray.push(node);
+		}
+		// Элементов больше нужного, ограничить до 5 элементов в 1 колонке
+		else {
+			if (curCarts < 5) {
+				let left = 0;
+				node.style.left = left + 'px';
+				node.style.width = cartWidth + 'px';
+
+				// Добавили элемент в контейнер (иначе не считает высоту)
+				rootContainer.appendChild(node);
+
+				// Смещение по firstColumn
+				let top = getTop(firstColumn, i, 1);
+				node.style.top = top + 'px';
+
+				curCarts++;
+				console.log(i);
+
+				firstColumn.push(node);
+			} else {
+				let left = (j%(columns-1)) ? ((j%(columns-1))*(gutter+cartWidth)+(gutter+cartWidth)) : (gutter+cartWidth);
+				node.style.left = left + 'px';
+				node.style.width = cartWidth + 'px';
+
+				// Добавили элемент в контейнер (иначе не считает высоту)
+				rootContainer.appendChild(node);
+
+				// Смещение по вертикали
+				let top = getTop(elemArray, j, columns-1);
+				node.style.top = top + 'px';
+
+				j++;
+
+				// Положили элемент в массив
+				elemArray.push(node);
+			}
+		}
+
 	}
 
 	// Работа с массивом элементов cart
-	function getTop(array, pos) {
-		// Смещение карточки от верхней границы контейнера
-		// Колонка и строка в которой находится карточка
+	function getTop(array, pos, columns) {
 		let offsetTop = 0;
 		let col = pos%columns;
 		let row = Math.floor(pos/columns);
 
-		// Первая строка с нулевым отступом
-		if (row === 0) {
-			return offsetTop;
+		switch (columns) {
+			case 1:
+				if (row===0) {
+					return offsetTop;
+				}
+				for(let i=0; i<row; i++) {
+					let k = i*columns+col;
+					if (array[k]) {
+						offsetTop += (array[k].clientHeight + gutter);
+					}
+				}
+				break;
+			case 2:
+				// Первая строка с нулевым отступом
+				console.log('col --' + col + '  row --' + row);
+				if (row === 0) {
+					return offsetTop;
+				}
+				// Бегаем по строкам
+				for(let i=0; i<row; i++) {
+					let k = i*columns+col;
+					if (array[k]) {
+						offsetTop += (array[k].clientHeight + gutter);
+					}
+				}
+				break;				
+			case 3:
+				// Первая строка с нулевым отступом
+				if (row === 0) {
+					return offsetTop;
+				}
+				// Бегаем по строкам
+				for(let i=0; i<row; i++) {
+					let k = i*columns+col;
+					if (array[k]) {
+						offsetTop += (array[k].clientHeight + gutter);
+					}
+				}
+				break;
+			default:
+				break;
 		}
-		// Бегаем по строкам
-		for(let i=0; i<row; i++) {
-			let k = i*columns+col;
-			if (array[k]) {
-				offsetTop += (array[k].clientHeight + gutter);
-			}
-		}
+
 		return offsetTop;
 	}
+
+
 });

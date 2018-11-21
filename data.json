@@ -60,48 +60,13 @@ let loadedData = `[
     "translation": "Идите прямо, а затем поверните направо."
   },
   {
-    "theme": "At the doctor",
-    "sourceText": "I need a sick note. It has gotten worse.",
-    "translation": "Мне нужна медицинская справка. Мне стало хуже."
+    "theme": "Travel",
+    "sourceText": "Go straight and then turn right.",
+    "translation": "Идите прямо, а затем поверните направо."
   },
   {
-    "theme": "At the hotel",
-    "sourceText": "The heating does not work and my neighbour is too loud.",
-    "translation": "Тут не работает отопление и мой сосед слишком шумный."
-  },
-  {
-    "theme": "At the hotel",
-    "sourceText": "I would like to change my room, because I requested a room with a view.",
-    "translation": "Я хочу поменять свой номер, поскольку я просил комнату с красивым видом."
-  },
-  {
-    "theme": "At the hotel",
-    "sourceText": "I want to make a reservation for the room.",
-    "translation": "Я хочу забронировать номер."
-  },
-  {
-    "theme": "At the shopping mall",
-    "sourceText": "Can I try it on?",
-    "translation": "Можно я это примерю?"
-  },
-  {
-    "theme": "At the shopping mall",
-    "sourceText": "I would like another color.",
-    "translation": "Я бы хотел другой цвет."
-  },
-  {
-    "theme": "At the shopping mall",
-    "sourceText": "Where is the cashdesk?",
-    "translation": "Где касса?"
-  },
-  {
-    "theme": "At the shopping mall",
-    "sourceText": "I find it too expensive.",
-    "translation": "Я считаю, что это слишком дорого."
-  },
-  {
-    "theme": "At the shopping mall",
-    "sourceText": "I would like to return my purchase and get a refund.",
-    "translation": "Я хочу вернуть свою покупку и получить деньги обратно."
+    "theme": "Travel",
+    "sourceText": "Go straight and then turn right.",
+    "translation": "Идите прямо, а затем поверните направо."
   }
 ]`
