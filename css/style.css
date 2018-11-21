@@ -48,6 +48,7 @@ h1 {
 	margin-right: auto;
 } 
 .cart {
+	cursor: pointer;
 	position: absolute;
 	padding: 10px;
 }

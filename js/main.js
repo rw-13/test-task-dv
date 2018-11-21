@@ -34,11 +34,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		let originalText = (props.sourceText) ? props.sourceText : '';
 		let transtatedText = (props.translation) ? props.translation : '';
 		let el = document.createElement('div');
-		el.innerHTML = '<div class="cart__title" data-translate="' + transtatedText +'">' + 
+		el.innerHTML = '<div class="cart__title">' + 
 				theme + '</div>' + '<div class="cart__content">' + originalText + '</div>';
+		el.setAttribute('data-translate', transtatedText);
 		el.classList.add('cart');
 		return el;
 	}
+
 
 	// -------------------------BOOTSTRAP-----------------------------
 	// Контейнер
@@ -65,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	let maxCarts = 5;
 	let curCarts = 0;
 
+	// Позиционируем элементы в контейнере
+	// на выходе два массива для первой и второй-третей колонок
 	for (let i=0, j=0; i<countElem; i++) {
 		let node = obj.createEl();
 		node.style.width = cartWidth + 'px';
@@ -160,6 +164,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	}
 
+	// Сортировка первой колонки
+//	firstColumn.sort(compareSort);
+	// Сортировка второй-третьей колонки
+//	elemArrayю.sort(compareSort);
+
+
+
 	// Массив элементов
 	// Позиция элемента в массиве
 	// Число колонок в массиве
@@ -217,6 +228,66 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 		return color;
 	}
+
+	// Сортировка элементов
+	function compareSort(a, b) {
+		return a.name.length - b.name.length;
+	}
+
+
+
+
+
+	// -------------------------Обработка событий ----------------------
+
+	(function (){
+
+		let cartTarget = document.getElementsByClassName('cart');
+
+		[].forEach.call(cartTarget, function(elem) {
+			let timer;
+			let flag = true;
+
+			elem.addEventListener('click', function(event) {
+				let that = this;
+					
+				// Открытие перевода запуск таймера	
+				if (flag) {
+					reverseText(that);
+
+					timer = setTimeout(function() {
+						that.setAttribute('open', '');
+						reverseText(that);
+						flag = true;
+					}, 1500);
+					
+					flag = false;
+				} else {
+					window.clearTimeout(timer);
+					reverseText(this);
+					this.removeAttribute('open');
+					flag = true;
+				}
+
+			});
+
+			elem.addEventListener('dblclick', function() {
+				this.parentNode.removeChild(this);
+			});
+
+		});
+
+		console.log(timer);
+
+		// Смена текста в блоке
+		function reverseText(obj) {
+			let conText = obj.querySelector('.cart__content').innerText;
+			let attrText = obj.getAttribute('data-translate');
+			obj.querySelector('.cart__content').innerText = attrText;
+			obj.setAttribute('data-translate', conText);
+		}
+			
+	})();
 
 
 });
