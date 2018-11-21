@@ -67,14 +67,15 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	for (let i=0, j=0; i<countElem; i++) {
 		let node = obj.createEl();
+		node.style.width = cartWidth + 'px';
+		node.style.background = getRandomColor();
 
-		// Элементов мало, в колонку нужно 3
+		// Элементов мало, выделить в первую колонку 3
 		if (countElem < 7) {
 			// Смещение по горизонтали
 			if (curCarts<3) {
 				let left = 0;
 				node.style.left = left + 'px';
-				node.style.width = cartWidth + 'px';
 
 				// Добавили элемент в контейнер (иначе не считает высоту)
 				rootContainer.appendChild(node);
@@ -89,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				let left = (j%(columns-1)) ? ((j%(columns-1))*(gutter+cartWidth)+(gutter+cartWidth))  : (gutter+cartWidth);
 				node.style.left = left + 'px';
-				node.style.width = cartWidth + 'px';
 
 				// Добавили элемент в контейнер (иначе не считает высоту)
 				rootContainer.appendChild(node);
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 
 		}
-		// Можно ложить в 3 колонки
+		// Можно ложить элементы в 3 колонки
 		else if (countElem >= 7 && countElem < 14) {
 			// Смещение по горизонтали
 			let left = (i%columns) ? ((i%columns)*(gutter+cartWidth)) : 0;
@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			if (curCarts < 5) {
 				let left = 0;
 				node.style.left = left + 'px';
-				node.style.width = cartWidth + 'px';
 
 				// Добавили элемент в контейнер (иначе не считает высоту)
 				rootContainer.appendChild(node);
@@ -144,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			} else {
 				let left = (j%(columns-1)) ? ((j%(columns-1))*(gutter+cartWidth)+(gutter+cartWidth)) : (gutter+cartWidth);
 				node.style.left = left + 'px';
-				node.style.width = cartWidth + 'px';
 
 				// Добавили элемент в контейнер (иначе не считает высоту)
 				rootContainer.appendChild(node);
@@ -162,17 +160,22 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	}
 
-	// Работа с массивом элементов cart
+	// Массив элементов
+	// Позиция элемента в массиве
+	// Число колонок в массиве
 	function getTop(array, pos, columns) {
 		let offsetTop = 0;
 		let col = pos%columns;
 		let row = Math.floor(pos/columns);
 
+		// Смещение первой строки массива
+		if (row===0) {
+			return offsetTop;
+		}
+
 		switch (columns) {
+			// Бегаем по строкам
 			case 1:
-				if (row===0) {
-					return offsetTop;
-				}
 				for(let i=0; i<row; i++) {
 					let k = i*columns+col;
 					if (array[k]) {
@@ -181,11 +184,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				}
 				break;
 			case 2:
-				// Первая строка с нулевым отступом
-				console.log('col --' + col + '  row --' + row);
-				if (row === 0) {
-					return offsetTop;
-				}
 				// Бегаем по строкам
 				for(let i=0; i<row; i++) {
 					let k = i*columns+col;
@@ -195,10 +193,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				}
 				break;				
 			case 3:
-				// Первая строка с нулевым отступом
-				if (row === 0) {
-					return offsetTop;
-				}
 				// Бегаем по строкам
 				for(let i=0; i<row; i++) {
 					let k = i*columns+col;
@@ -212,6 +206,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 
 		return offsetTop;
+	}
+
+	// Генератор случайного цвета
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
 	}
 
 
