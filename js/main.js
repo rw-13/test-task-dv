@@ -22,8 +22,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			// Вырезали случ.объект из this._data
 			let dataCart = this.getRandomEl();
 			return new Cart(dataCart);
-			
-			// rootContainer.appendChild(node._el);
 		};
 	}
 
@@ -276,8 +274,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 
 		});
-
-		console.log(timer);
 
 		// Смена текста в блоке
 		function reverseText(obj) {

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Разговорная лексика</title>
+		<script type="text/javascript" src="./src/data/data.json"></script>
+		<script type="text/javascript" src="./src/ctrl/app.js"></script>
+		<script type="text/javascript" src="./src/components/Random.js"></script>
+		<script type="text/javascript" src="./src/model/Card.js"></script>
+		<script type="text/javascript" src="./src/view/listCard.js"></script>
+		<script type="text/javascript" src="./src/view/deleteCard.js"></script>
+		<script type="text/javascript">
+			window.addEventListener("load", app.view.listCard.setupUserInterface);
+		</script>
+		<script type="text/javascript" src="./src/components/Events.js"></script>
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+	</head>
+
+	<body>
+		<div class="page">
+			<div class="container">
+				<h1>New phrases for today</h1>
+			</div>
+			<div id="root" class="container"></div>
+		</div>
+	</body>
+
+</html>
