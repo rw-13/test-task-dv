@@ -57,7 +57,13 @@ h1 {
 	padding: 10px;
 	border-radius: 3px;
 	filter: brightness(1);
-	transition: filter 0.3s ease-out;
+	transform: scale(1);
+	transition: filter 0.3s ease-out, transform 0.3s ease-out;
+}
+.cart.cart_open {
+	z-index: 100;
+	transform: scale(1.05);
+	transition: transform 1s ease-out;
 }
 .cart:hover {
 	filter: brightness(1.3);

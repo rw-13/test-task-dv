@@ -11,9 +11,12 @@ window.addEventListener("load", function() {
 				elem.addEventListener('click', function(event) {
 					let that = this;
 					if (flag) {
+						that.classList.add('cart_open');
+						// that.setAttribute('open', '');
 						CardEvents.reverseText(that);
 						timer=setTimeout(function() {
-							that.setAttribute('open', '');
+							that.classList.remove('cart_open');
+							// that.removeAttribute('open');
 							CardEvents.reverseText(that);
 							flag=true;
 						}, 1500);
@@ -21,7 +24,8 @@ window.addEventListener("load", function() {
 					} else {
 						window.clearTimeout(timer);
 						CardEvents.reverseText(this);
-						this.removeAttribute('open');
+						that.classList.remove('cart_open');
+						// this.removeAttribute('open');
 						flag=true;
 					}
 				});
